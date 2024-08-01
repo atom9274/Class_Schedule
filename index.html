@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Corrected Modern College Timetable</title>
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-image: url('https://images.unsplash.com/photo-1533327325824-76bc4e62d560?q=80&w=2069&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');
+            background-size: cover;
+            background-position: center;
+        }
+        .app-container {
+            background: rgba(0, 0, 0, 0.21);
+            backdrop-filter: blur(25px);
+            border-radius: 20px;
+            padding: 20px;
+            box-shadow: 0 0px 50px 0 rgba(255, 255, 255, 0.55);
+            width: 90%;
+            max-width: 1962px;
+            height: 81vh;
+            display: flex;
+            flex-direction: column;
+        }
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 50px;
+        }
+        .user-profile {
+            display: flex;
+            align-items: center;
+        }
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 20%;
+            background-color: #ffffff;
+            margin-right: 15px;
+        }
+        .timetable {
+            flex-grow: 1;
+            overflow-y: auto;
+            padding: 20px;
+            border-radius: 15px;
+        }
+        table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 5px 5px;
+        }
+        th, td {
+            padding: 18px;
+            text-align: left;
+            background: rgba(255, 255, 255, 0.1);
+            color: rgb(255, 255, 255);
+        }
+        th {
+            font-weight: bold;
+            opacity: 0.7;
+        }
+        td {
+            border-radius: 20px;
+            transition: all 0.3s ease;
+        }
+        .current {
+            background: rgba(3, 107, 0, 0.5);
+            box-shadow: 0 4px 15px rgba(255, 255, 255, 0.5);
+        }
+        .break {
+            background: rgb(255, 255, 255);
+        }
+        .time-column {
+            width: 85px;
+        }
+        
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        <div class="header">
+            <div class="user-profile">
+                <div class="user-avatar"></div>
+                <h2>Yash Raj</h2>
+            </div>
+            <div id="current-day-time"></div>
+        </div>
+        
+        <div class="timetable">
+            <table>
+                <tr>
+                    <th class="time-column">Time</th>
+                    <th>Mon</th>
+                    <th>Tue</th>
+                    <th>Wed</th>
+                    <th>Thu</th>
+                    <th>Fri</th>
+                </tr>
+                <!-- Timetable rows will be dynamically inserted here -->
+            </table>
+        </div>
+    </div>
+
+    <script>
+        const timetableData = [
+            { time: "21:10-22:50", mon: "FX II", tue: "FX II", wed: "FX II", thu: "Facial Animation", fri: "Facial Animation" },
+            { time: "22:50-00:30", mon: "Sculpting", tue: "Sculpting", wed: "Sculpting", thu: "Advance Compositing II", fri: "Advance Compositing II" },
+            { time: "00:30-01:20", mon: "BREAK", tue: "Production for animation short film", wed: "Production for animation short film", thu: "Animation Showreel", fri: "Animation Showreel" },
+            { time: "01:20-02:10", mon: "Advance Compositing II", tue: "BREAK", wed: "BREAK", thu: "BREAK", fri: "BREAK" },
+            { time: "02:10-03:00", mon: "Advance Compositing II", tue: "Advanced 3D Animation", wed: "Advanced 3D Animation", thu: "Advanced 3D Animation", fri: "Minor Project - IV" },
+            { time: "03:00-03:50", mon: "Advance Compositing II", tue: "Advanced 3D Animation", wed: "Advanced 3D Animation", thu: "Advanced 3D Animation", fri: "BREAK" }
+        ];
+
+        function populateTimetable() {
+            const table = document.querySelector('table');
+            timetableData.forEach(row => {
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td class="time-column">${row.time}</td>
+                    <td>${row.mon}</td>
+                    <td>${row.tue}</td>
+                    <td>${row.wed}</td>
+                    <td>${row.thu}</td>
+                    <td>${row.fri}</td>
+                `;
+                table.appendChild(tr);
+            });
+        }
+
+        function updateCurrentClass() {
+            const now = new Date();
+            const day = now.getDay();
+            const time = now.getHours() * 60 + now.getMinutes();
+
+            document.querySelectorAll('td').forEach(td => td.classList.remove('current'));
+
+            if (day >= 1 && day <= 5) {
+                const rowIndex = timetableData.findIndex(row => {
+                    const [start, end] = row.time.split('-');
+                    const [startHour, startMin] = start.split(':').map(Number);
+                    const [endHour, endMin] = end.split(':').map(Number);
+                    let startTime = startHour * 60 + startMin;
+                    let endTime = endHour * 60 + endMin;
+                    
+                    // Adjust for midnight crossing
+                    if (endTime < startTime) {
+                        endTime += 24 * 60;
+                    }
+                    if (time < 4 * 60) { // If current time is before 4 AM
+                        time += 24 * 60; // Add 24 hours to current time
+                    }
+                    
+                    return time >= startTime && time < endTime;
+                });
+
+                if (rowIndex !== -1) {
+                    const currentCell = document.querySelector(`table tr:nth-child(${rowIndex + 2}) td:nth-child(${day + 1})`);
+                    currentCell.classList.add('current');
+                }
+            }
+
+            document.getElementById('current-day-time').textContent = now.toLocaleString('en-US', { weekday: 'long', hour: 'numeric', minute: '2-digit', hour12: true });
+        }
+
+        populateTimetable();
+        updateCurrentClass();
+        setInterval(updateCurrentClass, 60000);
+    </script>
+</body>
+</html>
