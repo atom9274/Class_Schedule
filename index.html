@@ -5,151 +5,196 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>College_Timetable</title>
     <style>
+        /* Basic reset and font settings for the entire document */
         body, html {
-            margin: 0px;
-            padding: 0px;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, Helvetica, monospace, Verdana;
             height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
-            background-image: url('https://plus.unsplash.com/premium_photo-1663054248129-5a1d394a98a1?q=80&w=870&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');
+            background-image: url('https://images.unsplash.com/photo-1719090024525-667c8fcf5bb9?q=80&w=928&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');
             background-size: cover;
             background-position: center;
         }
+
+        /* Styles for the container holding the timetable */
         .app-container {
             background: rgba(0, 0, 0, 0.25);
-            backdrop-filter: blur(2px);
-            border-radius: 10px;
-            padding: 15px;
-            box-shadow: 0px 0px 100px 0 rgba(0, 0, 0, 0.58);
-            width: 95%; /* Changed from 100% to 90% */
-            max-width: 380px; /* Increased from 330px for better desktop view */
-            height: auto; /* Changed from fixed height */
-            min-height: 50vh; /* Added to ensure minimum height */
+            backdrop-filter: blur(50px);
+            border-radius: 30px;
+            padding: 20px;
+            box-shadow: 0px 0px 10px 0 rgb(0, 0, 0);
+            width: 95%; /* Adjust width for better flexibility */
+            max-width: 600px; /* Set a max-width to prevent overflow on large screens */
+            height: auto; /* Let the height adjust automatically */
             display: flex;
             flex-direction: column;
-            margin: 0 auto; 
+            margin: 0 auto;
         }
-       .img  {
-         max-width: 100%;
-         height: auto;
-        }
+
+        /* Header styling, including the title and current day/time display */
         .header {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin-bottom: 10px;
-}
-
-.user-profile {
-    text-align: center;
-}
-
-.user-profile h2 {
-    margin: 5px 0;
-}
-        
-         .timetable {
-    flex-grow: 1;
-    overflow-y: ;
-    padding: 0px;
-    border-radius: 15px;
-}
-        table {
-    width: 100%;
-    table-layout: fixed;
-    border-collapse: separate;
-    border-spacing: 2px;
-}
-        th, td {
-    padding: 2px;
-    background: rgba(255, 255, 255, 0.22);
-            color: rgb(255, 255, 255);
-    text-align: center;
-    font-size: 20px;
-    word-wrap: normal;
-    overflow-wrap: normal;
-}
-
-        th {
-            font-weight: 800;
-            opacity: 100;
-            border-radius: 7px
+            display: flex;
+            justify-content: center;
+            flex-direction: column;
+            margin-bottom: 10px;
         }
+
+        /* User profile section that displays course information */
+        .user-profile {
+            text-align: center;
+        }
+
+        /* Course title styling */
+        .user-profile h2 {
+            margin: 0;
+            font-size: 18px;
+        }
+
+        /* Semester and schedule title styling */
+        .user-profile p {
+            margin: 0;
+            font-size: 24px;
+            font-family: monospace;
+        }
+
+        /* Timetable styling */
+        .timetable {
+            flex-grow: 1;
+            overflow-y: hidden; /* Remove scroll */
+            border-radius: 15px;
+        }
+
+        /* General table styling */
+        table {
+            width: 100%;
+            font-size: 14px;
+            table-layout: fixed;
+            border-collapse: separate;
+            border-spacing: 1px;
+        }
+
+        /* Styling for both table headers and cells */
+        th, td {
+            padding: 4px;
+            background: rgba(255, 255, 255, 0.22);
+            color: rgb(255, 255, 255);
+            text-align: center;
+            font-size: 12px; /* Adjust font size for readability */
+        }
+
+        /* Header (th) specific styling */
+        th {
+            font-weight: bold;
+            background: rgba(0, 0, 0, 0.72);
+        }
+
+        /* Table cell (td) specific styling */
         td {
-            height: 50px;
             overflow: hidden;
-              backdrop-filter: blur(20px);
-              background: rgba(166, 166, 166, 0.05);
-            text-overflow: ellipsis;
-            white-space: nowrap;
-            border-radius: 5px;
+            backdrop-filter: blur(30px);
+            background: rgba(255, 255, 255, 0);
+            border-radius: 10px;
             transition: all 0.3s ease;
         }
-        .current {
-            background: rgba(3, 107, 0, 0.5);
-            box-shadow: 0 4px 15px rgb(242, 255, 0);
-        }
-        .break {
-            background: rgb(255, 255, 255);
+/* Highlighting the current day column */
+        .current-day {
+            background: rgba(255, 255, 255, 0.44);
             color: black;
         }
+
+        /* Highlighting the current class in progress */
+        .current {
+            background: rgb(64, 255, 73);
+            box-shadow: 0 4px 15px rgb(255, 255, 255);
+        }
+
+        /* Styling for break periods */
+        .break {
+            background: rgba(255, 255, 255, 0);
+            color: black;
+        }
+
+        /* Styling the time column */
         .time-column {
-    width: 40px;
-}
+            width: 15%; /* Adjust time column width */
+            font-size: 13px;
         }
-        #message {
-            margin-top: auto;
-            text-align: center;
-            padding: 8px;
-            color: white;
-            font-size: 16px;
-        }
+
         
-        @media (max-width: 480px) {
-    .app-container {
-        width: 100%;
-        padding: 0px;
-    }
-    
-    th, td {
-        font-size: 12px;
-        padding: 0px 0px;
-    }
-    
-    .time-column {
-        width: 64px;
-    }
-    
-    #message {
-        font-size: 30px;
-        position: center;
-    }
-    
-    .header h2 {
-        font-size: 18px;
-    }
-    
-    #current-day-time {
-        font-size: 21px;
-    }
-}
+        /* Message display styling */
+        #message {
+            margin-top: 10px;
+            text-align: center;
+            color: white;
+            font-size: 14px;
+        }
+
+        /* Mobile View Adjustments */
+        @media (max-width: 768px) {
+            .app-container {
+                padding: 10px;
+            }
+            .time-column {
+                width: 20%;
+                font-size: 10px;
+            }
+            th, td {
+                font-size: 10px;
+                padding: 2px;
+            }
+            #message {
+                font-size: 12px;
+            }
+        }
+
+        /* Tablet View Adjustments */
+        @media (min-width: 768px) and (max-width: 992px) {
+            .app-container {
+                width: 90%;
+            }
+            th, td {
+                font-size: 12px;
+                padding: 6px;
+            }
+            #message {
+                font-size: 14px;
+            }
+        }
+
+        /* Desktop View Adjustments */
+        @media (min-width: 992px) {
+            .app-container {
+                width: 100%;
+            }
+            th, td {
+                font-size: 14px;
+                padding: 8px;
+            }
+            #message {
+                font-size: 16px;
+            }
+        }
     </style>
 </head>
 <body>
     <div class="app-container">
+        <!-- Header section for displaying course and semester information -->
         <div class="header">
             <div class="user-profile">
-                <div class="user-avatar"></div>
-                <h2>Yash Raj</h2>
+                <h2>Bsc. Vfx and Animation</h2>
+                <p>sem 5 schedule</p>
             </div>
-            <div id="current-day-time"></div>
+            <div id="current-day-time"></div> <!-- Placeholder for current day and time display -->
         </div>
 
+        <!-- Timetable section -->
         <div class="timetable">
             <table>
                 <tr>
+                    <!-- Table headers for time and days of the week -->
                     <th class="time-column">Time</th>
                     <th>Mon</th>
                     <th>Tue</th>
@@ -161,10 +206,12 @@
             </table>
         </div>
 
+        <!-- Placeholder for current class message -->
         <div id="message"></div>
     </div>
 
     <script>
+        // Sample timetable data containing class times and subjects for each day
         const timetableData = [
             { time: "09:00-10:50", mon: "FX II", tue: "FX II", wed: "FX II", thu: "Facial Animation", fri: "Facial Animation" },
             { time: "10:50-12:30", mon: "Sculpting", tue: "Sculpting", wed: "Sculpting", thu: "Adv Compositing II", fri: "Adv Compositing II" },
@@ -174,72 +221,94 @@
             { time: "15:00-15:50", mon: "Minor Project - IV", tue: "Adv 3D Animation", wed: "Adv 3D Animation", thu: "Adv 3D Animation", fri: "BREAK" }
         ];
 
+        // Function to dynamically populate the timetable with data
         function populateTimetable() {
-    const table = document.querySelector('table');
-    timetableData.forEach(row => {
-        const tr = document.createElement('tr');
-        tr.innerHTML = `
-            <td class="time-column">${row.time}</td>
-            <td>${optimizeText(row.mon)}</td>
-            <td>${optimizeText(row.tue)}</td>
-            <td>${optimizeText(row.wed)}</td>
-            <td>${optimizeText(row.thu)}</td>
-            <td>${optimizeText(row.fri)}</td>
-        `;
-        table.appendChild(tr);
-    });
-}
+            const table = document.querySelector('table'); // Select the table element
+            timetableData.forEach(row => {
+                const tr = document.createElement('tr'); // Create a new row for each time slot
+                tr.innerHTML = `
+                    <td class="time-column">${row.time}</td>
+                    <td>${optimizeText(row.mon)}</td>
+                    <td>${optimizeText(row.tue)}</td>
+                    <td>${optimizeText(row.wed)}</td>
+                    <td>${optimizeText(row.thu)}</td>
+                    <td>${optimizeText(row.fri)}</td>
+                `; // Fill in the cells with the respective subject data
+                table.appendChild(tr); // Append the row to the table
+            });
+        }
 
-function optimizeText(text) {
-    if (text.length > 15) {
-        return text.split(' ').map(word => word.substring(0, 3) + '.').join('<br>');
-    }
-    return text;
-}
+        // Function to optimize the display text in each cell, handling long text
+        function optimizeText(text) {
+            if (text.length > 50) {
+                // If the text is too long, break it into shorter segments
+                return text.split(' ').map(word => word.substring(0, 4)).join('<br>');
+            }
+            return text; // Otherwise, return the text as-is
+        }
 
+        // Function to update the current class and highlight it in the timetable
         function updateCurrentClass() {
-    const now = new Date();
-    const day = now.getDay();
-    const time = now.getHours() * 60 + now.getMinutes();
-    const messageEl = document.getElementById('message');
+            const now = new Date(); // Get the current date and time
+            const day = now.getDay(); // Get the current day of the week (0 = Sunday, 1 = Monday, etc.)
+            const time = now.getHours() * 60 + now.getMinutes(); // Convert current time to minutes
+            const messageEl = document.getElementById('message'); // Select the message display element
 
-    document.querySelectorAll('td').forEach(td => td.classList.remove('current'));
-
-    if (time < 9 * 60 || time > 15 * 60 + 50 || day === 0 || day === 6) {
-        messageEl.textContent = "No ongoing classes";
-    } else {
-        const dayIndex = day - 1; // Adjust for Monday being the first day in the table
-        const rowIndex = timetableData.findIndex(row => {
-            const [start, end] = row.time.split('-');
-            const [startHour, startMin] = start.split(':').map(Number);
-            const [endHour, endMin] = end.split(':').map(Number);
-            const startTime = startHour * 60 + startMin;
-            const endTime = endHour * 60 + endMin;
-            
-            return time >= startTime && time < endTime;
-        });
-
-        if (rowIndex !== -1) {
-            const currentCell = document.querySelector(`table tr:nth-child(${rowIndex + 2}) td:nth-child(${dayIndex + 2})`);
-            if (currentCell) {
-                currentCell.classList.add('current');
-                if (currentCell.textContent.trim() === 'BREAK') {
-                    messageEl.textContent = "Enjoy the break!";
+            // Highlight the current day column
+            const dayIndex = day - 1; // Adjust for Monday being the first day in the table
+            document.querySelectorAll('td:not(.time-column)').forEach((td, index) => {
+                if (index % 5 === dayIndex) {
+                    td.classList.add('current-day'); // Highlight current day
                 } else {
-                    messageEl.textContent = `Current class: ${currentCell.textContent}`;
+                    td.classList.remove('current-day'); // Remove highlight from other days
+                }
+            });
+
+            document.querySelectorAll('td').forEach(td => td.classList.remove('current')); // Remove 'current' class from all cells
+
+            // Determine if the current time falls within the class schedule
+            if (time < 9 * 60 || time > 15 * 60 + 50 || day === 0 || day === 6) {
+                // If outside class hours or it's a weekend, show no ongoing classes
+                messageEl.textContent = "No ongoing classes";
+            } else {
+                const rowIndex = timetableData.findIndex(row => {
+                    const [start, end] = row.time.split('-'); // Split the time into start and end
+                    const [startHour, startMin] = start.split(':').map(Number); // Convert start time to minutes
+                    const [endHour, endMin] = end.split(':').map(Number); // Convert end time to minutes
+                    const startTime = startHour * 60 + startMin;
+                    const endTime = endHour * 60 + endMin;
+
+                    return time >= startTime && time < endTime; // Check if current time is within this time slot
+                });
+
+                if (rowIndex !== -1) {
+                    // If a current class is found, highlight the corresponding cell
+                    const currentCell = document.querySelector(`table tr:nth-child(${rowIndex + 2}) td:nth-child(${dayIndex + 2})`);
+                    if (currentCell) {
+                        currentCell.classList.add('current'); // Highlight the current class
+                        // Display a message based on whether the current period is a break or a class
+                        if (currentCell.textContent.trim() === 'BREAK') {
+                            messageEl.textContent = "Enjoy the break!";
+                        } else {
+                            messageEl.textContent = `Current class: ${currentCell.textContent}`;
+                        }
+                    }
+                } else {
+                    // If no current class is found, show no ongoing classes
+                    messageEl.textContent = "No ongoing classes";
                 }
             }
-        } else {
-            messageEl.textContent = "No ongoing classes";
+
+            // Update the current day and time display
+            document.getElementById('current-day-time').textContent = now.toLocaleString('en-US', { weekday: 'long', hour: 'numeric', minute: '2-digit', hour12: true });
         }
-    }
 
-    document.getElementById('current-day-time').textContent = now.toLocaleString('en-US', { weekday: 'long', hour: 'numeric', minute: '2-digit', hour12: true });
-}
-
+        // Call the function to populate the timetable initially
         populateTimetable();
+
+        // Update the current class immediately and then every minute
         updateCurrentClass();
-        setInterval(updateCurrentClass, 60000);
+        setInterval(updateCurrentClass, 60000); // Update every 60 seconds
     </script>
 </body>
 </html>
