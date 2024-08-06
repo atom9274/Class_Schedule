@@ -20,7 +20,7 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            background-image: url('backdrop_2.webp');
+            background: url('bg3.webp');
             background-size: cover;
             background-attachment: fixed;          
         }
@@ -28,11 +28,11 @@
         /* Styles for the container holding the timetable */
         .app-container {
             background: rgba(0, 0, 0, 0);
-            -webkit-backdrop-filter: blur(20px);
             backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
             border-radius: 10px;
             padding: 20px;
-            box-shadow: 0px 0px 15px 0 rgb(0, 0, 0);
+            box-shadow: 0px 25px 30px 0 rgba(0, 0, 0, 0.5);
             width: 90%;
             max-width: 600px;
             min-width: fit-content;
@@ -57,6 +57,8 @@
 
         /* Course title styling */
         .user-profile h2 {
+            text-shadow: 0 1px 1px rgb(0, 0, 0);
+            padding: 10px;
             margin: 0;
             font-size: 30px;
             color:cornsilk;
@@ -66,8 +68,11 @@
 
         /* Semester and schedule title styling */
         .user-profile p {
-            margin: 0;
+            margin-top: -15px;
+            margin-bottom: 2px;
             font-size: 17px;
+            text-shadow: 0 1px 1px rgb(0, 0, 0);
+
             font-family:  'Nunito', sans-serif;
     font-weight: 826;
             color:antiquewhite;
@@ -98,15 +103,13 @@
             background: rgb(255, 255, 255);
             color: rgb(255, 255, 255);
             text-align: center;
-            font-size: 12px;
-            border: 1px solid rgba(0, 0, 0, 0.11);
-                        border-radius: 5px;
+            border-radius: 5px;
 
         }
 
         /* Header (th) specific styling */
         th {
-            font-weight: bold;
+            font-weight: bolder;
             background: rgba(0, 0, 0, 0.72);
         }
 
@@ -114,7 +117,7 @@
         td {
             overflow: hidden;
             backdrop-filter: blur(25px);
-            -webkit-backdrop-filter: blur(25px);
+            -webkit-backdrop-filter:blur(25px);
             background: rgba(0, 0, 0, 0.7);
             border-radius: 5px;
             transition: all 0.3s ease;
@@ -123,17 +126,27 @@
 
         /* Highlighting the current day column */
         .current-day {
-            background: rgba(255, 255, 255, 0.52);
+            background: rgba(255, 255, 255, 0.77);
             color: #000000;
-            font-weight: bold;
+            font-weight: 800;
         }
+        
+        th.time-column {
+    background: rgba(255, 255, 255, 0.38); /* Distinctive color for the day name */
+    color: #000000;
+    }
 
+        th.current-day {
+    background: rgba(255, 251, 107, 0.7); /* Distinctive color for the day name */
+    color: #000000;
+            font-size: medium;
+    }
         /* Highlighting the current class in progress */
         .current {
-            background: rgba(255, 255, 255, 0.9);
-            box-shadow: 0px 0px 5px rgb(163, 255, 0);
+            background: rgba(79, 255, 0, 0.7);
+            box-shadow: 0px 0px 10px rgb(72, 255, 0);
             color:black;
-            font-weight: 800;
+            
         }
 
         /* Styling for break periods */
@@ -172,23 +185,23 @@ text-shadow: 0 1px 1px rgb(0, 0, 0);
         /* Mobile View Adjustments */
         @media (max-width: 768px) {
             .app-container {
-                padding: 2px;
-                margin: 5px;
+                padding: 1px;
+                margin: 1px;
             }
             .time-column {
-                width: 16%;
-                font-size: 10px;
+                width: 17%;
+                font-size: 11px;
                 
             }
             th, td {
-                font-size: 10px;
+                font-size: 11px;
                 padding: 5px;
                 display: flexbox;
                 
                 
             }
             #message {
-                font-size: 24px;
+                font-size: 17px;
                 margin-bottom: 5px;
                 
             }
@@ -214,9 +227,23 @@ text-shadow: 0 1px 1px rgb(0, 0, 0);
                 width: 100%;
             }
             th, td {
-                font-size: 14px;
-                padding: 8px;
+                width: 200px;
+                font-size: 20px;
+                font-weight: 800;
+                padding: 30px;
             }
+              .time-column {
+                  width: 200px;
+                  font-size: 20px;
+                font-weight: 800;
+            
+        }
+               th.current-day {
+    background: rgba(255, 251, 107, 0.7); /* Distinctive color for the day name */
+    color: #000000;
+             font-size: 25px;
+                font-weight: 800;
+    }
             #message {
                 font-size: 40px;
             }
@@ -323,75 +350,85 @@ text-shadow: 0 1px 1px rgb(0, 0, 0);
         }
 
         // Function to highlight the current day in the timetable and update the message
-        function highlightCurrentDay() {
-            const now = new Date(); // for testing purposes-- '2024-08-06T15:15:00'
-            const day = now.getDay();
-            const hour = now.getHours();
-            const minute = now.getMinutes();
-            const timetableRows = document.querySelectorAll("#timetable tr");
-            const dayColumn = day;
-            const message = document.getElementById("message");
+ function highlightCurrentDay() {
+    const now = new Date('2024-08-06T15:15:00'); // for testing purposes-- '2024-08-06T15:15:00'
+    const day = now.getDay();
+    const hour = now.getHours();
+    const minute = now.getMinutes();
+    const timetableRows = document.querySelectorAll("#timetable tr");
+    const dayColumn = day;
+    const message = document.getElementById("message");
 
-            // Reset all highlights
-            timetableRows.forEach(row => {
-                Array.from(row.cells).forEach(cell => {
-                    cell.classList.remove("current-day", "current");
-                });
-            });
+    // Reset all highlights
+    timetableRows.forEach(row => {
+        Array.from(row.cells).forEach(cell => {
+            cell.classList.remove("current-day", "current");
+        });
+    });
 
-            if (dayColumn >= 1 && dayColumn <= 5) {
-                let classFound = false;
-                timetableRows.forEach((row, rowIndex) => {
-                    if (rowIndex === 0) {
-                        row.cells[dayColumn].classList.add("current-day");
-                    } else {
-                        const timeRange = row.cells[0].textContent.split("-");
-                        const startTime = timeRange[0].split(":").map(Number);
-                        const endTime = timeRange[1].split(":").map(Number);
-
-                        const startHour = startTime[0];
-                        const startMinute = startTime[1];
-                        const endHour = endTime[0];
-                        const endMinute = endTime[1];
-
-                        if (
-                            (hour > startHour || (hour === startHour && minute >= startMinute)) &&
-                            (hour < endHour || (hour === endHour && minute <= endMinute))
-                        ) {
-                            // Find the visible cell for the current day
-                            let currentCell = row.cells[dayColumn];
-                            while (currentCell.style.display === 'none') {
-                                currentCell = timetableRows[--rowIndex].cells[dayColumn];
-                            }
-                            currentCell.classList.add("current");
-
-                            const className = currentCell.textContent.trim();
-                            const classTime = row.cells[0].textContent.trim();
-                            if (className === "BREAK") {
-                                message.textContent = "Enjoy the break!";
-                            } else {
-                                const fullClassName = subjectMapping[className] || className;
-                                message.textContent = `Current Class: ${fullClassName}`;
-                            }
-                            classFound = true;
-                        }
-                    }
-                });
-
-                if (!classFound) {
-                    message.textContent = "No ongoing classes";
-                }
-            } else {
-                message.textContent = "No classes on weekends";
+    if (dayColumn >= 1 && dayColumn <= 5) {
+        let classFound = false;
+        
+        // Highlight entire column for the current day
+        timetableRows.forEach((row, rowIndex) => {
+            if (rowIndex > 0) { // Skip the header row
+                row.cells[dayColumn].classList.add("current-day");
             }
+        });
 
-            // Update current day and time display
-            const currentDayTime = document.getElementById("current-day-time");
-            const days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
-            const currentDayName = days[day];
-            const formattedTime = now.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: true });
-            currentDayTime.textContent = `${currentDayName}, ${formattedTime}`;
+        timetableRows.forEach((row, rowIndex) => {
+            if (rowIndex === 0) {
+                // Highlight the header for the current day
+                row.cells[dayColumn].classList.add("current-day");
+            } else {
+                const timeRange = row.cells[0].textContent.split("-");
+                const startTime = timeRange[0].split(":").map(Number);
+                const endTime = timeRange[1].split(":").map(Number);
+
+                const startHour = startTime[0];
+                const startMinute = startTime[1];
+                const endHour = endTime[0];
+                const endMinute = endTime[1];
+
+                if (
+                    (hour > startHour || (hour === startHour && minute >= startMinute)) &&
+                    (hour < endHour || (hour === endHour && minute <= endMinute))
+                ) {
+                    // Find the visible cell for the current day
+                    let currentCell = row.cells[dayColumn];
+                    while (currentCell.style.display === 'none') {
+                        currentCell = timetableRows[--rowIndex].cells[dayColumn];
+                    }
+                    currentCell.classList.add("current");
+
+                    const className = currentCell.textContent.trim();
+                    const classTime = row.cells[0].textContent.trim();
+                    if (className === "BREAK") {
+                        message.textContent = "Enjoy the break!";
+                    } else {
+                        const fullClassName = subjectMapping[className] || className;
+                        message.textContent = `Current Class: ${fullClassName}`;
+                    }
+                    classFound = true;
+                }
+            }
+        });
+
+        if (!classFound) {
+            message.textContent = "No ongoing classes";
         }
+    } else {
+        message.textContent = "No classes on weekends";
+    }
+
+    // Update current day and time display
+    const currentDayTime = document.getElementById("current-day-time");
+    const days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+    const currentDayName = days[day];
+    const formattedTime = now.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: true });
+    currentDayTime.textContent = `${currentDayName}, ${formattedTime}`;
+}
+
 
         // Initialize the timetable and highlight the current day/class when the page loads
         window.onload = function () {
