@@ -20,19 +20,19 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            background: url('backdrop.jpg');
+            background: url('bg5.jpg');
             background-size: cover;
-            background-attachment: fixed;          
+            background-attachment: fixed;        
         }
 
         /* Styles for the container holding the timetable */
         .app-container {
             background: rgba(0, 0, 0, 0);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
+            backdrop-filter: blur(35px);
+            -webkit-backdrop-filter: blur(35px);
             border-radius: 10px;
             padding: 20px;
-            box-shadow: 0px 25px 30px 0 rgba(0, 0, 0, 0.5);
+            box-shadow: 0px 0px 75px 0 rgba(0, 0, 0, 0.31);
             width: 90%;
             max-width: 600px;
             min-width: fit-content;
@@ -55,7 +55,7 @@
             text-align: center;
         }
 
-        /* Course title styling */
+        /* bsc vfx */
         .user-profile h2 {
             text-shadow: 0 1px 1px rgb(0, 0, 0);
             padding: 10px;
@@ -66,7 +66,7 @@
             
         }
 
-        /* Semester and schedule title styling */
+        /* sem 5 schedule */
         .user-profile p {
             margin-top: -15px;
             margin-bottom: 2px;
@@ -110,7 +110,7 @@
         /* Header (th) specific styling */
         th {
             font-weight: bolder;
-            background: rgba(0, 0, 0, 0.72);
+            background: rgba(0, 0, 0, 0.5);
         }
 
         /* Table cell (td) specific styling */
@@ -118,35 +118,39 @@
             overflow: hidden;
             backdrop-filter: blur(25px);
             -webkit-backdrop-filter:blur(25px);
-            background: rgba(0, 0, 0, 0.7);
-            border-radius: 5px;
-            transition: all 0.3s ease;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 2px;
+            transition: all 0.5s ease;
             
         }
 
         /* Highlighting the current day column */
         .current-day {
-            background: rgba(255, 255, 255, 0.77);
+            background: rgba(255, 255, 255, 0.71);
             color: #000000;
             font-weight: 800;
         }
         
         th.time-column {
-    background: rgba(255, 255, 255, 0.38); /* Distinctive color for the day name */
+    background: rgba(255, 255, 255, 0.5); /* Distinctive color for the time text */
     color: #000000;
     }
 
         th.current-day {
-    background: rgba(255, 251, 107, 0.7); /* Distinctive color for the day name */
+    background: rgb(255, 251, 127); /* Distinctive color for the day name */
     color: #000000;
             font-size: medium;
     }
         /* Highlighting the current class in progress */
         .current {
-            background: rgba(79, 255, 0, 0.7);
+            background: rgb(122, 255, 62);
             box-shadow: 0px 0px 10px rgb(72, 255, 0);
             color:black;
             
+        }
+        
+        td.current {
+                        /* for future work on current cell */
         }
 
         /* Styling for break periods */
@@ -189,7 +193,7 @@ text-shadow: 0 1px 1px rgb(0, 0, 0);
                 margin: 1px;
             }
             .time-column {
-                width: 17%;
+                width: 29%;
                 font-size: 11px;
                 
             }
@@ -222,31 +226,59 @@ text-shadow: 0 1px 1px rgb(0, 0, 0);
         }
 
         /* Desktop View Adjustments */
-        @media (min-width: 992px) {
+        @media (min-width: 1440px) {
             .app-container {
                 width: 100%;
             }
+            .user-profile h2 {
+            text-shadow: 0 1px 1px rgb(0, 0, 0);
+            padding: 10px;
+            margin: 0;
+            font-size: 65px;
+            color:cornsilk;   
+        }
+
+        /* sem 5 schedule */
+        .user-profile p {
+            margin-top: -15px;
+            margin-bottom: 2px;
+            font-size: 30px;
+            text-shadow: 0 1px 1px rgb(0, 0, 0);
+            font-family:  'Nunito', sans-serif;
+    font-weight: 905;
+            color:antiquewhite;
+        }
+
             th, td {
                 width: 200px;
-                font-size: 20px;
-                font-weight: 800;
+                font-size: 22px;
+                font-weight: bolder;
                 padding: 30px;
             }
               .time-column {
-                  width: 200px;
-                  font-size: 20px;
+                  width: 150px;
+                  font-size: 25px;
                 font-weight: 800;
             
         }
                th.current-day {
-    background: rgba(255, 251, 107, 0.7); /* Distinctive color for the day name */
+    background: rgb(255, 249, 59);/* Distinctive color for the day name */
     color: #000000;
              font-size: 25px;
                 font-weight: 800;
     }
             #message {
-                font-size: 40px;
+                font-size: 50px;
             }
+            #current-day-time {
+            text-align: left;
+            color:cornsilk;
+text-shadow: 0 1px 1px rgb(0, 0, 0);
+            font-size: 25px;
+            margin-bottom: -3px;
+              margin-left: 5px;
+        }
+            
         }
     </style>
 </head>
@@ -351,7 +383,7 @@ text-shadow: 0 1px 1px rgb(0, 0, 0);
 
         // Function to highlight the current day in the timetable and update the message
  function highlightCurrentDay() {
-    const now = new Date(); // for testing purposes-- '2024-08-06T15:15:00'
+    const now = new Date('2024-08-06T15:15:00'); // for testing purposes-- '2024-08-06T15:15:00'
     const day = now.getDay();
     const hour = now.getHours();
     const minute = now.getMinutes();
