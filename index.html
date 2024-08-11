@@ -15,7 +15,7 @@
         body, html {
             margin: 0;
             padding: 0;
-            font-family: 'Roboto', sans-serif;
+            font-family: 'Nunito', sans-serif;
             height: 100vh;
             display: flex;
             justify-content: center;
@@ -27,9 +27,9 @@
 
         /* Styles for the container holding the timetable */
         .app-container {
-            background: rgba(0, 0, 0, 0);
-            backdrop-filter: blur(35px);
-            -webkit-backdrop-filter: blur(35px);
+            background: rgba(255, 255, 255, 0);
+            backdrop-filter: blur(50px);
+            -webkit-backdrop-filter: blur(50px);
             border-radius: 10px;
             padding: 20px;
             box-shadow: 0px 0px 75px 0 rgba(0, 0, 0, 0.31);
@@ -61,6 +61,7 @@
             padding: 10px;
             margin: 0;
             font-size: 30px;
+            font-weight: bolder;
             color:cornsilk;
             
             
@@ -74,7 +75,7 @@
             text-shadow: 0 1px 1px rgb(0, 0, 0);
 
             font-family:  'Nunito', sans-serif;
-    font-weight: 826;
+    font-weight: 500;
             color:antiquewhite;
         }
 
@@ -104,6 +105,7 @@
             color: rgb(255, 255, 255);
             text-align: center;
             border-radius: 5px;
+            
 
         }
 
@@ -116,35 +118,35 @@
         /* Table cell (td) specific styling */
         td {
             overflow: hidden;
-            backdrop-filter: blur(25px);
-            -webkit-backdrop-filter:blur(25px);
-            background: rgba(0, 0, 0, 0.3);
-            border-radius: 2px;
+            backdrop-filter: blur(50px);
+            -webkit-backdrop-filter:blur(50px);
+            background: rgba(0, 0, 0, 0.25);
+            border-radius: 5px;
             transition: all 0.5s ease;
             
         }
 
         /* Highlighting the current day column */
         .current-day {
-            background: rgba(255, 255, 255, 0.71);
-            color: #000000;
+            background: rgba(0, 0, 0, 0.6);
+            color: #ffffff;
             font-weight: 800;
         }
         
         th.time-column {
-    background: rgba(255, 255, 255, 0.5); /* Distinctive color for the time text */
-    color: #000000;
+    background: rgba(0, 0, 0, 0.5); /* Distinctive color for the time text */
+    color: #ffffff;
     }
 
         th.current-day {
-    background: rgb(255, 251, 127); /* Distinctive color for the day name */
+    background: rgba(255, 255, 255, 0.5); /* Distinctive color for the day name */
     color: #000000;
             font-size: medium;
     }
         /* Highlighting the current class in progress */
         .current {
-            background: rgb(122, 255, 62);
-            box-shadow: 0px 0px 10px rgb(72, 255, 0);
+            background: rgb(108, 255, 62);
+            box-shadow: 0px 0px 10px rgb(121, 255, 0);
             color:black;
             
         }
@@ -192,8 +194,18 @@ text-shadow: 0 1px 1px rgb(0, 0, 0);
                 padding: 1px;
                 margin: 1px;
             }
+              /* sem 5 schedule */
+        .user-profile p {
+            margin-top: -16px;
+            margin-bottom: 8px;
+            font-size: 12px;
+            text-shadow: 0 1px 1px rgb(0, 0, 0);
+            font-family:  'Nunito', sans-serif;
+            color:antiquewhite;
+        }
+
             .time-column {
-                width: 29%;
+                width: 18%;
                 font-size: 11px;
                 
             }
@@ -209,6 +221,16 @@ text-shadow: 0 1px 1px rgb(0, 0, 0);
                 margin-bottom: 5px;
                 
             }
+            #current-day-time {
+            text-align: left;
+            color:cornsilk;
+text-shadow: 0 1px 1px rgb(0, 0, 0);
+            font-size: 10px;
+                font-weight: 800;
+            margin-bottom: -5px;
+              margin-left: 8px;
+        }
+            
         }
 
         /* Tablet View Adjustments */
@@ -229,6 +251,7 @@ text-shadow: 0 1px 1px rgb(0, 0, 0);
         @media (min-width: 1440px) {
             .app-container {
                 width: 100%;
+               
             }
             .user-profile h2 {
             text-shadow: 0 1px 1px rgb(0, 0, 0);
@@ -240,12 +263,11 @@ text-shadow: 0 1px 1px rgb(0, 0, 0);
 
         /* sem 5 schedule */
         .user-profile p {
-            margin-top: -15px;
-            margin-bottom: 2px;
+            margin-top: -24px;
+            margin-bottom: -8px;
             font-size: 30px;
             text-shadow: 0 1px 1px rgb(0, 0, 0);
             font-family:  'Nunito', sans-serif;
-    font-weight: 905;
             color:antiquewhite;
         }
 
@@ -253,7 +275,7 @@ text-shadow: 0 1px 1px rgb(0, 0, 0);
                 width: 200px;
                 font-size: 22px;
                 font-weight: bolder;
-                padding: 30px;
+                padding: 24px;
             }
               .time-column {
                   width: 150px;
@@ -262,7 +284,7 @@ text-shadow: 0 1px 1px rgb(0, 0, 0);
             
         }
                th.current-day {
-    background: rgb(255, 249, 59);/* Distinctive color for the day name */
+    background: rgba(255, 255, 255, 0.5); /* Distinctive color for the day name */
     color: #000000;
              font-size: 25px;
                 font-weight: 800;
@@ -275,8 +297,9 @@ text-shadow: 0 1px 1px rgb(0, 0, 0);
             color:cornsilk;
 text-shadow: 0 1px 1px rgb(0, 0, 0);
             font-size: 25px;
-            margin-bottom: -3px;
-              margin-left: 5px;
+                font-weight: 800;
+            margin-bottom: 5px;
+              margin-left: 10px;
         }
             
         }
@@ -287,8 +310,8 @@ text-shadow: 0 1px 1px rgb(0, 0, 0);
         <!-- Header section for displaying course and semester information -->
         <div class="header">
             <div class="user-profile">
-                <h2>Bsc. VFX and Animation</h2>
-                <p>Sem 5 schedule</p>
+                <h2>Bsc. Animation & VFX</h2>
+                <p>Sem5 Time Table</p>
             </div>
             <div id="current-day-time"></div> <!-- Placeholder for current day and time display -->
         </div>
